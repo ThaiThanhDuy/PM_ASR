@@ -82,9 +82,9 @@ fun MainScreen(mqttHelper: MqttHelper, cameraBitmap: MutableState<Bitmap?>) {
                     selected = selectedTabIndex.value == 1,
                     onClick = {
                         selectedTabIndex.value = 1
-                        println("Tab Vị trí được chọn")
+                        println("Tab Camera được chọn")
                     },
-                    text = { Text("Vị trí", style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)) }
+                    text = { Text("Camera", style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)) }
                 )
                 Tab(
                     selected = selectedTabIndex.value == 2,
@@ -111,7 +111,7 @@ fun MainScreen(mqttHelper: MqttHelper, cameraBitmap: MutableState<Bitmap?>) {
                         ControlPanelTab(mqttHelper = mqttHelper, modifier = Modifier.fillMaxSize())
                     }
                 }
-                1 -> LocationTab(cameraBitmap = cameraBitmap)
+                1 -> CameraTab(cameraBitmap = cameraBitmap)
                 2 -> GPSTab()
             }
         }
@@ -224,7 +224,7 @@ fun ControlButton(text: String, onClick: () -> Unit) {
 }
 
 @Composable
-fun LocationTab(cameraBitmap: MutableState<Bitmap?>) {
+fun CameraTab(cameraBitmap: MutableState<Bitmap?>) {
     Column(
         modifier = Modifier
             .fillMaxSize()
@@ -232,7 +232,7 @@ fun LocationTab(cameraBitmap: MutableState<Bitmap?>) {
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Text(
-            text = "Vị trí hiện tại của xe sẽ được hiển thị ở đây.",
+            text = "Luồng camera từ xe sẽ hiển thị ở đây.",
             modifier = Modifier.padding(bottom = 16.dp),
             style = MaterialTheme.typography.bodyLarge.copy(fontWeight = FontWeight.Bold)
         )
@@ -242,15 +242,14 @@ fun LocationTab(cameraBitmap: MutableState<Bitmap?>) {
                 contentDescription = "Camera Stream",
                 modifier = Modifier
                     .fillMaxWidth()
-                    .height(200.dp)
+                    .height(300.dp) // Tăng kích thước hiển thị camera
             )
         } else {
             Text(
-                "Đang chờ hình ảnh camera...",
+                "Đang chờ luồng camera...",
                 style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
             )
         }
-        // Bạn có thể tích hợp các thư viện hiển thị bản đồ như Google Maps SDK ở đây.
     }
 }
 
