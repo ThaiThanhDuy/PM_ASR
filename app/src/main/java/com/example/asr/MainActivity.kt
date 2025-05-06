@@ -204,7 +204,23 @@ fun ControlPanelTab(mqttHelper: MqttHelper, modifier: Modifier = Modifier) {
             )
         )
 
-        Spacer(modifier = Modifier.weight(1f))
+        Spacer(modifier = Modifier.height(16.dp))
+
+        Row(
+            modifier = Modifier.fillMaxWidth(),
+            horizontalArrangement = Arrangement.SpaceBetween,
+            verticalAlignment = Alignment.Bottom
+        ) {
+            ControlButton(text = "HOME", onClick = {
+                mqttHelper.publishCommand("HOME")
+                commandStatus.value = "Đã gửi lệnh: HOME"
+            })
+            Spacer(modifier = Modifier.weight(1f)) // Pushes the DOCK button to the right
+            ControlButton(text = "DOCK", onClick = {
+                mqttHelper.publishCommand("DOCK")
+                commandStatus.value = "Đã gửi lệnh: DOCK"
+            })
+        }
     }
 }
 

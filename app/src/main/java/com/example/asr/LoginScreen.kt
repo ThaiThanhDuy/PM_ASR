@@ -63,7 +63,7 @@ fun LoginScreen(navController: NavHostController) {
                 // Mock login logic with specific credentials
                 isLoggingIn = true
                 loginError = ""
-                if (username == "UTE" && password == "123") {
+                if (username == "admin" && password == "123") {
                     isLoginSuccessful = true
                     // In a real app, you'd likely call an authentication service here
                     // and navigate upon successful response.
