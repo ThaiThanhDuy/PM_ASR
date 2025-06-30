@@ -56,7 +56,12 @@ class MainActivity : ComponentActivity() {
                 val navController = rememberNavController()
                 NavHost(navController = navController, startDestination = "login") {
                     composable("login") { LoginScreen(navController = navController) }
-                    composable("main") { MainScreen(mqttHelper = mqttHelper, cameraBitmap = cameraBitmap) }
+                    composable("main") {
+                        MainScreen(
+                            mqttHelper = mqttHelper,
+                            cameraBitmap = cameraBitmap
+                        )
+                    }
                 }
             }
         }
@@ -76,7 +81,12 @@ fun MainScreen(mqttHelper: MqttHelper, cameraBitmap: MutableState<Bitmap?>) {
                         selectedTabIndex.value = 0
                         println("Tab Điều khiển được chọn")
                     },
-                    text = { Text("Điều khiển", style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)) }
+                    text = {
+                        Text(
+                            "Điều khiển",
+                            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)
+                        )
+                    }
                 )
                 Tab(
                     selected = selectedTabIndex.value == 1,
@@ -84,7 +94,12 @@ fun MainScreen(mqttHelper: MqttHelper, cameraBitmap: MutableState<Bitmap?>) {
                         selectedTabIndex.value = 1
                         println("Tab Camera được chọn")
                     },
-                    text = { Text("Camera", style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)) }
+                    text = {
+                        Text(
+                            "Camera",
+                            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)
+                        )
+                    }
                 )
                 Tab(
                     selected = selectedTabIndex.value == 2,
@@ -92,7 +107,12 @@ fun MainScreen(mqttHelper: MqttHelper, cameraBitmap: MutableState<Bitmap?>) {
                         selectedTabIndex.value = 2
                         println("Tab GPS được chọn")
                     },
-                    text = { Text("GPS", style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)) }
+                    text = {
+                        Text(
+                            "GPS",
+                            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)
+                        )
+                    }
                 )
             }
 
@@ -111,6 +131,7 @@ fun MainScreen(mqttHelper: MqttHelper, cameraBitmap: MutableState<Bitmap?>) {
                         ControlPanelTab(mqttHelper = mqttHelper, modifier = Modifier.fillMaxSize())
                     }
                 }
+
                 1 -> CameraTab(cameraBitmap = cameraBitmap)
                 2 -> GPSTab()
             }
@@ -235,7 +256,10 @@ fun ControlButton(text: String, onClick: () -> Unit) {
         interactionSource = interactionSource,
         colors = ButtonDefaults.buttonColors(containerColor = buttonColor)
     ) {
-        Text(text = text, style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold))
+        Text(
+            text = text,
+            style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)
+        )
     }
 }
 
@@ -276,7 +300,10 @@ fun GPSTab() {
     val location = remember { mutableStateOf<Location?>(null) }
     val hasGpsPermission = remember {
         mutableStateOf(
-            ContextCompat.checkSelfPermission(context, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
+            ContextCompat.checkSelfPermission(
+                context,
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED
         )
     }
 
@@ -315,21 +342,49 @@ fun GPSTab() {
             .padding(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Text(text = "Thông tin GPS", style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold))
+        Text(
+            text = "Thông tin GPS",
+            style = MaterialTheme.typography.headlineMedium.copy(fontWeight = FontWeight.Bold)
+        )
         Spacer(modifier = Modifier.height(16.dp))
 
         if (hasGpsPermission.value) {
             if (location.value != null) {
-                Text(text = "Latitude: ${location.value!!.latitude}", style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold))
-                Text(text = "Longitude: ${location.value!!.longitude}", style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold))
-                Text(text = "Accuracy: ${location.value!!.accuracy} m", style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold))
-                location.value?.altitude?.let { Text(text = "Altitude: $it m", style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)) }
-                location.value?.speed?.let { Text(text = "Speed: $it m/s", style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)) }
+                Text(
+                    text = "Latitude: ${location.value!!.latitude}",
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                )
+                Text(
+                    text = "Longitude: ${location.value!!.longitude}",
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                )
+                Text(
+                    text = "Accuracy: ${location.value!!.accuracy} m",
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                )
+                location.value?.altitude?.let {
+                    Text(
+                        text = "Altitude: $it m",
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                    )
+                }
+                location.value?.speed?.let {
+                    Text(
+                        text = "Speed: $it m/s",
+                        style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                    )
+                }
             } else {
-                Text(text = "Đang chờ tín hiệu GPS...", style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold))
+                Text(
+                    text = "Đang chờ tín hiệu GPS...",
+                    style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+                )
             }
         } else {
-            Text(text = "Ứng dụng chưa có quyền truy cập GPS.", style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold))
+            Text(
+                text = "Ứng dụng chưa có quyền truy cập GPS.",
+                style = MaterialTheme.typography.bodyMedium.copy(fontWeight = FontWeight.Bold)
+            )
             Button(onClick = {
                 ActivityCompat.requestPermissions(
                     context as MainActivity,
@@ -337,7 +392,10 @@ fun GPSTab() {
                     100
                 )
             }) {
-                Text("Yêu cầu quyền GPS", style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold))
+                Text(
+                    "Yêu cầu quyền GPS",
+                    style = MaterialTheme.typography.labelLarge.copy(fontWeight = FontWeight.Bold)
+                )
             }
         }
     }
